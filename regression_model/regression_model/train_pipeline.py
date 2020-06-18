@@ -4,9 +4,16 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 import joblib
 
-from pipeline import titanic_pipe
-import config
+from regression_model import titanic_pipe
+from regression_model.config import config
 
+def save_pipeline(*, pipeline_to_persist):
+    """ persis the pipeline """
+    save_file_name = "regression_model.pkl"
+    save_path = config.TRAINED_MODEL_DIR / save_file_name
+    joblib.dump(pipeline_to_persist, save_path)
+
+    print("saved pipeline")
 
 
 def run_training():
@@ -23,7 +30,7 @@ def run_training():
         random_state=0)  # we are setting the seed here
 
     titanic_pipe.fit(X_train, y_train)
-    joblib.dump(titanic_pipe, config.PIPELINE_NAME)
+    #joblib.dump(titanic_pipe, config.PIPELINE_NAME)
 
 
 if __name__ == '__main__':
